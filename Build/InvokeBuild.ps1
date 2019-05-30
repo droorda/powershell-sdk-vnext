@@ -137,14 +137,14 @@ task Deploy Build, {
         -Verbose
     # Get-ChildItem "$ProjectRoot\Builds" | Sort-Object Name
     Remove-Item -Path $ModulePackage -Force
-    # Try
-    # {
-    #     # $Version = Get-NextPSGalleryVersion -Name $env:BHProjectName -ErrorAction Stop
-    #     Update-Metadata -Path $env:BHPSModuleManifest -PropertyName FunctionsToExport -Value '*' -ErrorAction stop
-    # }
-    # Catch
-    # {
-    #     "Failed to set FunctionsToExport for '$env:BHProjectName': $_.`nContinuing with existing version"
-    # }
+    Try
+    {
+        # $Version = Get-NextPSGalleryVersion -Name $env:BHProjectName -ErrorAction Stop
+        Update-Metadata -Path $env:BHPSModuleManifest -PropertyName FunctionsToExport -Value '*' -ErrorAction stop
+    }
+    Catch
+    {
+        "Failed to set FunctionsToExport for '$env:BHProjectName': $_.`nContinuing with existing version"
+    }
 
 }
