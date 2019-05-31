@@ -87,24 +87,24 @@ task Build Test, {
     # Load the module, read the exported functions, update the psd1 FunctionsToExport
     Set-ModuleFunctions
 
-    # # Bump the module version
-    # Try
-    # {
-    #     # $Version = Get-NextPSGalleryVersion -Name $env:BHProjectName -ErrorAction Stop
-    #     [Version]$Version  = Get-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion
-    #     $Build    = if($Version.Build    -le 0) { 0 } else { $Version.Build }
-    #     $Revision = if($Version.Revision -le 0) { 1 } else { $Version.Revision + 1 }
-    #     $Version  = New-Object System.Version ($Version.Major, $Version.Minor, $Build, $Revision)
-    #     # write-Verbose "BHProjectName      - $env:BHProjectName" -Verbose
-    #     write-Verbose "Version            - $Version" -Verbose
-    #     # write-Verbose "BHPSModuleManifest - $env:BHPSModuleManifest" -Verbose
+    # Bump the module version
+    Try
+    {
+        # $Version = Get-NextPSGalleryVersion -Name $env:BHProjectName -ErrorAction Stop
+        [Version]$Version  = Get-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion
+        $Build    = if($Version.Build    -le 0) { 0 } else { $Version.Build }
+        $Revision = if($Version.Revision -le 0) { 1 } else { $Version.Revision + 1 }
+        $Version  = New-Object System.Version ($Version.Major, $Version.Minor, $Build, $Revision)
+        # write-Verbose "BHProjectName      - $env:BHProjectName" -Verbose
+        write-Verbose "Version            - $Version" -Verbose
+        # write-Verbose "BHPSModuleManifest - $env:BHPSModuleManifest" -Verbose
 
-    #     Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value $Version -ErrorAction stop
-    # }
-    # Catch
-    # {
-    #     "Failed to update version for '$env:BHProjectName': $_.`nContinuing with existing version"
-    # }
+        Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value $Version -ErrorAction stop
+    }
+    Catch
+    {
+        "Failed to update version for '$env:BHProjectName': $_.`nContinuing with existing version"
+    }
 }
 
 task Deploy Build, {
