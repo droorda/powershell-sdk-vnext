@@ -12,7 +12,7 @@
 RootModule = 'Kemp.LoadBalancer.Powershell.psm1'
 
 # Version number of this module.
-ModuleVersion = '7.2.46.0'
+ModuleVersion = '7.2.46.3'
 
 # ID used to uniquely identify this module
 GUID = '3228e652-65d0-11e9-b6f9-000af7388c80'
