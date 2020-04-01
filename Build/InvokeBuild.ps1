@@ -124,9 +124,11 @@ task Deploy Build, {
     $ModulePackage = New-PMModulePackage -Verbose -PassThru -Path "$ProjectRoot\$(split-path $ProjectRoot -Leaf)"
     # $ModulePackage = Move-Item -path $ModulePackage -Destination "$ProjectRoot\Builds" -PassThru
     Write-Host "Signing Nuget package" -ForegroundColor Cyan
+    $Certificate = Get-ChildItem -Path Cert:\CurrentUser\My -CodeSigningCert | Where-Object {$_.NotAfter -gt (Get-date)}| Sort-Object NotAfter -Descending | Select-Object -First 1
+
     Set-PMPackageCert `
         -path $ModulePackage.fullname `
-        -CertificateFingerprint 'a6fb07f7732c7c4c1decb637e85e43902dd533ef' `
+        -CertificateFingerprint $Certificate.Thumbprint `
         -Timestamper 'http://sha256timestamp.ws.symantec.com/sha256/timestamp' `
         -Verbose
     Write-Host "Publishing Nuget package" -ForegroundColor Cyan
